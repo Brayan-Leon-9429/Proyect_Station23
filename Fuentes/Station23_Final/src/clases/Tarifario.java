@@ -9,19 +9,11 @@ package clases;
  * @author Braya
  */
 public class Tarifario {
-    private String tipo_vehiculo;
+    private int tipo_vehiculo;
     private Double tarifa_hora;
     private Double comision;
 
     public Tarifario() {
-    }
-
-    public String getTipo_vehiculo() {
-        return tipo_vehiculo;
-    }
-
-    public void setTipo_vehiculo(String tipo_vehiculo) {
-        this.tipo_vehiculo = tipo_vehiculo;
     }
 
     public Double getTarifa_hora() {
@@ -38,6 +30,14 @@ public class Tarifario {
 
     public void setComision(Double comision) {
         this.comision = comision;
+    }
+
+    public int getTipo_vehiculo() {
+        return tipo_vehiculo;
+    }
+
+    public void setTipo_vehiculo(int tipo_vehiculo) {
+        this.tipo_vehiculo = tipo_vehiculo;
     }
     
     

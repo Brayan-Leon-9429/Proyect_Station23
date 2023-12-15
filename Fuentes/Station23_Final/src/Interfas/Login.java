@@ -6,7 +6,7 @@ package Interfas;
 
 import clases.JPanelColor;
 import clases.JPanelConFondo;
-import Base_De_Datos.DaoLogin;
+import Base_De_Datos.DaoAdministrador;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  */
 public class Login extends javax.swing.JFrame {
 
-    DaoLogin daoLogin = new DaoLogin();
+    DaoAdministrador daoLogin = new DaoAdministrador();
 
     public Login() {
         initComponents();
@@ -36,7 +36,7 @@ public class Login extends javax.swing.JFrame {
         validar = daoLogin.ubicacionGetCodigo(jtfUsuario.getText(), pass);
         return validar;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -183,7 +183,7 @@ public class Login extends javax.swing.JFrame {
     private void btnAdministradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministradorActionPerformed
         Boolean validar = Validar();
         if (validar) {
-           InicioAdministrador inicioAdmin = new InicioAdministrador();
+            InicioAdministrador inicioAdmin = new InicioAdministrador();
             inicioAdmin.setVisible(true);
             this.dispose();
         } else {

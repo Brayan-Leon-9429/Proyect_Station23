@@ -22,7 +22,7 @@ public class DaoTarifario {
     private ConexionBD bd = new ConexionBD();
     private String mensaje;
     
-    public Tarifario tarifarioGet(String tipo_vehiculo) {
+    public Tarifario tarifarioGet(int tipo_vehiculo) {
         Tarifario tarifario = null;
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT ")
@@ -32,7 +32,7 @@ public class DaoTarifario {
                 .append(" WHERE tipo_vehiculo = ?");
         try (Connection cn = bd.getConexion()) {
             PreparedStatement ps = cn.prepareStatement(sql.toString());
-            ps.setString(1, tipo_vehiculo);
+            ps.setInt(1, tipo_vehiculo);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 tarifario = new Tarifario();
@@ -50,10 +50,9 @@ public class DaoTarifario {
     
     public List<Tarifario> tarifarioSel() {
         List<Tarifario> lista = null;
-
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT ")
-                .append("tipo_vehiculo, ")
+                .append("id_tipo_vehiculo, ")
                 .append("tarifa_hora, ")
                 .append("comision")
                 .append(" FROM tarifario");
@@ -63,7 +62,7 @@ public class DaoTarifario {
             lista = new ArrayList<>();
             while (rs.next()) {
                 Tarifario tarifario = new Tarifario();
-                tarifario.setTipo_vehiculo(rs.getString(1));
+                tarifario.setTipo_vehiculo(rs.getInt(1));
                 tarifario.setTarifa_hora(rs.getDouble(2));
                 tarifario.setComision(rs.getDouble(3));
                 lista.add(tarifario);
@@ -89,7 +88,6 @@ public class DaoTarifario {
             if (cont == 0) {
                 mensaje = "No se pudo actualizar";
             }
-            mensaje="Se actualizo la tarifa correctamente";
         } catch (SQLException e) {
             mensaje = e.getMessage();
         }

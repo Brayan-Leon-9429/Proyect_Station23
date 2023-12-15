@@ -4,8 +4,9 @@
  */
 package Interfas;
 
+import Base_De_Datos.DaoVehiculo;
 import clases.JPanelConFondo;
-import clases.RegistroInicial;
+import clases.Vehiculo;
 import javax.swing.ButtonModel;
 import javax.swing.JOptionPane;
 
@@ -15,7 +16,8 @@ import javax.swing.JOptionPane;
  */
 public class SeleccionVehiculo extends javax.swing.JFrame {
 
-    RegistroInicial reg_ini;
+    Vehiculo vehiculo;
+    DaoVehiculo daoVehiculo = new DaoVehiculo();
 
     public SeleccionVehiculo() {
         initComponents();
@@ -23,17 +25,17 @@ public class SeleccionVehiculo extends javax.swing.JFrame {
         panelFondo.setBounds(0, 0, jpnlFondoImagen.getWidth(), jpnlFondoImagen.getHeight());
         jpnlFondoImagen.add(panelFondo);
         jpnlFondoImagen.setOpaque(false);
-        jrbAuto.setActionCommand("Auto");
-        jrbCamioneta.setActionCommand("Camioneta");
-        jrbMoto.setActionCommand("Moto");
+        jrbAuto.setActionCommand("2");
+        jrbCamioneta.setActionCommand("3");
+        jrbMoto.setActionCommand("1");
         bgVehiculos.add(jrbAuto);
         bgVehiculos.add(jrbCamioneta);
         bgVehiculos.add(jrbMoto);
         this.setLocationRelativeTo(null);
     }
 
-    public void setRegistroIncial(RegistroInicial rt) {
-        reg_ini = rt;
+    public void setVehiculo(Vehiculo v) {
+        vehiculo = v;
     }
 
     /**
@@ -194,10 +196,13 @@ public class SeleccionVehiculo extends javax.swing.JFrame {
     private void jbtSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSiguienteActionPerformed
         ButtonModel selectedButton = bgVehiculos.getSelection();
         if (selectedButton != null) {
-            String tipo_vehi = selectedButton.getActionCommand().toLowerCase();
-            reg_ini.setTipo_vehiculo(tipo_vehi);
+            String tipo_vehi = selectedButton.getActionCommand();
+            int tipo = Integer.parseInt(tipo_vehi);
+            System.out.println(tipo);
+            vehiculo.setId_tipo_vehiculo(tipo);
+            daoVehiculo.vehiculoIns(vehiculo);
             SeleccionUbiPisoA pisoa = new SeleccionUbiPisoA();
-            pisoa.setRegistroIncial(reg_ini);
+            pisoa.setVehiculo(vehiculo);
             pisoa.setVisible(true);
             this.dispose();
         } else {

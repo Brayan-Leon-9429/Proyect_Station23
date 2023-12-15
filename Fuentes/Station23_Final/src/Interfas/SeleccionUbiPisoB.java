@@ -4,9 +4,12 @@
  */
 package Interfas;
 
-import clases.RegistroInicial;
+import Base_De_Datos.DaoRegistro;
 import clases.Ubicacion;
 import Base_De_Datos.DaoUbicacion;
+import Base_De_Datos.DaoVehiculo;
+import clases.Registro;
+import clases.Vehiculo;
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -17,8 +20,10 @@ import javax.swing.JOptionPane;
  */
 public class SeleccionUbiPisoB extends javax.swing.JFrame {
 
-    DaoUbicacion dao = new DaoUbicacion();
-    RegistroInicial reg_ini;
+    DaoUbicacion daoUbicacion = new DaoUbicacion();
+    DaoRegistro daoRegistro = new DaoRegistro();
+    DaoVehiculo daoVehiculo = new DaoVehiculo();
+    Registro registro;
 
     public SeleccionUbiPisoB() {
         initComponents();
@@ -26,9 +31,8 @@ public class SeleccionUbiPisoB extends javax.swing.JFrame {
         jbtSiguiente.setEnabled(false);
     }
 
-    public void setRegistroIncial(RegistroInicial rt) {
-        reg_ini = rt;
-        validarTodo();
+    public void setRegistro(Registro r) {
+        registro = r;
     }
     
     private void validarTodo(){
@@ -64,10 +68,11 @@ public class SeleccionUbiPisoB extends javax.swing.JFrame {
     }
     
     private void validar(JButton btn) {
-        Ubicacion ubi = dao.ubicacionGet(btn.getText());
-        String tipo_vehi = ubi.getTipo_vehiculo();
+        Ubicacion ubi = daoUbicacion.ubicacionGet(btn.getText());
+        int tipo_vehi = ubi.getId_tipo_vehiculo();
         String estado = ubi.getEstado();
-        if (tipo_vehi.equalsIgnoreCase(reg_ini.getTipo_vehiculo())) {
+        Vehiculo v = daoVehiculo.vehiculoGet(registro.getId_vehiculo());
+        if (tipo_vehi == v.getId_tipo_vehiculo()) {
             switch (estado) {
                 case "libre" -> {
                     btn.setBackground(new Color(0xFE, 0xD3, 0x6B));
@@ -80,7 +85,7 @@ public class SeleccionUbiPisoB extends javax.swing.JFrame {
                     btn.setBackground(new Color(0xD9, 0xD9, 0xD9));
                     btn.setEnabled(false);
                 }
-                default -> { 
+                default -> {
                     btn.setBackground(new Color(0xD9, 0xD9, 0xD9));
                     btn.setEnabled(false);
 
@@ -105,10 +110,9 @@ public class SeleccionUbiPisoB extends javax.swing.JFrame {
         );
         if (opcion == JOptionPane.YES_OPTION) {
             String idLugar = btn.getText();
-            reg_ini.setLugar(idLugar);
-            reg_ini.setCodigo_reg(dao.ubicacionGetCodigo(idLugar));
+            registro.setId_ubicacion(idLugar);
             System.out.println(idLugar);
-            dao.ubicacionUpdEstado(idLugar, "ocupado");
+            daoUbicacion.ubicacionUpdEstado(idLugar, "ocupado");
             bloquearBotones();
             jbtSiguiente.setEnabled(true);
         } else if (opcion == JOptionPane.NO_OPTION) {
@@ -599,21 +603,21 @@ public class SeleccionUbiPisoB extends javax.swing.JFrame {
 
     private void jbtSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSiguienteActionPerformed
         ConfirmarRegistro confirmarRegistro = new ConfirmarRegistro();
-        confirmarRegistro.setRegistroIncial(reg_ini);
+        confirmarRegistro.setRegistroIncial(registro);
         confirmarRegistro.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jbtSiguienteActionPerformed
 
     private void jbtPisoBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPisoBActionPerformed
         SeleccionUbiPisoB pisob = new SeleccionUbiPisoB();
-        pisob.setRegistroIncial(reg_ini);
+        pisob.setRegistro(registro);
         pisob.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jbtPisoBActionPerformed
 
     private void jbtPisoAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPisoAActionPerformed
         SeleccionUbiPisoA pisoa = new SeleccionUbiPisoA();
-        pisoa.setRegistroIncial(reg_ini);
+        pisoa.setRegistro(registro);
         pisoa.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jbtPisoAActionPerformed

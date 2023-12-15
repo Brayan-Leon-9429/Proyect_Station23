@@ -9,35 +9,47 @@ package Interfas;
  *
  * @author danda
  */
+import Base_De_Datos.DaoPago;
 import clases.RegistroFinal;
 import clases.Tarifario;
 import Base_De_Datos.DaoTarifario;
+import Base_De_Datos.DaoTipoVehiculo;
 import Base_De_Datos.DaoUbicacion;
+import Base_De_Datos.DaoVehiculo;
+import clases.Pago;
+import clases.Registro;
+import clases.Vehiculo;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ConfirmarRetiro extends javax.swing.JFrame {
 
-    RegistroFinal reg_fin = new RegistroFinal();
+    Registro registro = new Registro();
     DaoUbicacion daoUbicacion = new DaoUbicacion();
     DaoTarifario daoTarifario = new DaoTarifario();
+    DaoTipoVehiculo daoTipoVehiculo = new DaoTipoVehiculo();
+    DaoPago daoPago = new DaoPago();
+    DaoVehiculo daoVehiculo = new DaoVehiculo();
     Tarifario tarifario = new Tarifario();
+    Pago pago = new Pago();
     SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     String Hora_E, Hora_S;
     Double comision = 0.0;
 
-    public ConfirmarRetiro(RegistroFinal rf, int origen) {
+    public ConfirmarRetiro(Registro r, int origen) {
         initComponents();
-        reg_fin = rf;
-        jtfCodigoRegistro.setText(reg_fin.getCodigo_reg());
-        jtfPlaca.setText(reg_fin.getPlaca());
-        Hora_E = formato.format(reg_fin.getHora_entrada());
+        registro = r;
+        jtfCodigoRegistro.setText(registro.getId_vehiculo());
+        Vehiculo v = daoVehiculo.vehiculoGet(registro.getId_vehiculo());
+        jtfPlaca.setText(v.getPlaca());
+        Hora_E = formato.format(registro.getHora_entrada());
         jtfHoraEntrada.setText(Hora_E);
-        Hora_S = formato.format(reg_fin.getHora_salida());
+        Hora_S = formato.format(registro.getHora_salida());
         jtfHoraSalida.setText(Hora_S);
-        jtfUbi.setText(reg_fin.getId_ubicacion());
-        jtfTipoVehi.setText(reg_fin.getTipo_vehiculo());
+        jtfUbi.setText(registro.getId_ubicacion());
+        String tipo = daoTipoVehiculo.obtenerTipo(v.getId_tipo_vehiculo());
+        jtfTipoVehi.setText(tipo);
         comision(origen);
         calcularHorasYValorAPagar();
     }
@@ -272,19 +284,18 @@ public class ConfirmarRetiro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfPlacaActionPerformed
 
-    private void calcularHorasYValorAPagar() {
+    private Pago calcularHorasYValorAPagar() {
         try {
+            Pago p = new Pago();
+            
             Date horaEntrada = formato.parse(Hora_E);
             Date horaSalida = formato.parse(Hora_S);
 
-            // Calcular la diferencia en milisegundos sin considerar los 10 minutos
             long diferenciaEnMilisegundos = horaSalida.getTime() - horaEntrada.getTime();
 
-            // Si la diferencia es menor a una hora, se ajusta a una hora
             if (diferenciaEnMilisegundos < 60 * 60 * 1000) {
-                diferenciaEnMilisegundos = 60 * 60 * 1000; // 1 hora en milisegundos
+                diferenciaEnMilisegundos = 60 * 60 * 1000;
             } else {
-                // Restar 10 minutos como consideración
                 long diezMinutosEnMilisegundos = 10 * 60 * 1000;
                 diferenciaEnMilisegundos -= diezMinutosEnMilisegundos;
             }
@@ -293,7 +304,10 @@ public class ConfirmarRetiro extends javax.swing.JFrame {
 
             double valorAPagar = (diferenciaEnHoras * tarifario.getTarifa_hora()) + comision;
 
-            reg_fin.setPago_total(valorAPagar);
+            String codigo = daoPago.idPago();
+            p.setId_pago(codigo);
+            p.setPago_total(valorAPagar);
+            
             jtfCntHoras.setText(String.format("%.2f", diferenciaEnHoras));
             jtfPago.setText("S/. " + String.format("%.2f", valorAPagar));
 

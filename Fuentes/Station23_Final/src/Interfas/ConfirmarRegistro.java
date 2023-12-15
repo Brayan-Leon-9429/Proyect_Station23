@@ -4,8 +4,13 @@
  */
 package Interfas;
 
+import Base_De_Datos.DaoRegistro;
 import clases.RegistroInicial;
 import Base_De_Datos.DaoRegistroInicial;
+import Base_De_Datos.DaoTipoVehiculo;
+import Base_De_Datos.DaoVehiculo;
+import clases.Registro;
+import clases.Vehiculo;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -15,19 +20,22 @@ import javax.swing.JOptionPane;
  */
 public class ConfirmarRegistro extends javax.swing.JFrame {
 
-    DaoRegistroInicial daoRegistroInicial = new DaoRegistroInicial();
-    RegistroInicial reg_ini;
+    DaoRegistro daoRegistro = new DaoRegistro();
+    DaoVehiculo daoVehiculo = new DaoVehiculo();
+    DaoTipoVehiculo daoTipoVehiculo = new DaoTipoVehiculo();
+    Registro registro;
     
     public ConfirmarRegistro() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
 
-    public void setRegistroIncial(RegistroInicial rt) {
-        reg_ini = rt;
-        jlbCodigo.setText(reg_ini.getCodigo_reg());
-        jlbEspacio.setText(reg_ini.getLugar());
-        jlbTipoVehiculo.setText(reg_ini.getTipo_vehiculo());
+    public void setRegistroIncial(Registro r) {
+        registro = r;
+        jlbCodigo.setText(registro.getId_vehiculo());
+        jlbEspacio.setText(registro.getId_ubicacion());
+        Vehiculo vehiculo = daoVehiculo.vehiculoGet(registro.getId_vehiculo());
+        jlbTipoVehiculo.setText(daoTipoVehiculo.obtenerTipo(vehiculo.getId_tipo_vehiculo()));
     }
     
     @SuppressWarnings("unchecked")
@@ -150,9 +158,10 @@ public class ConfirmarRegistro extends javax.swing.JFrame {
 
     private void jbtConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtConfirmarActionPerformed
         Date date = new Date();
-        reg_ini.setHora_entrada(date);
-        daoRegistroInicial.regIniUpd(reg_ini.getLugar(), reg_ini.getPlaca(), reg_ini.getTipo_vehiculo(), reg_ini.getHora_entrada());
-        System.out.println(daoRegistroInicial.getMensaje());
+        registro.setHora_entrada(date);
+        int n = 1;
+        daoRegistro.regIniIns(registro.getId_ubicacion(), n, registro.getId_vehiculo(), registro.getHora_entrada());
+        System.out.println(daoRegistro.getMensaje());
         JOptionPane.showMessageDialog(this, "Se registro correctamente", "Solicitud", JOptionPane.INFORMATION_MESSAGE);
         InicioCliente inicioCliente = new InicioCliente();
         inicioCliente.setVisible(true);

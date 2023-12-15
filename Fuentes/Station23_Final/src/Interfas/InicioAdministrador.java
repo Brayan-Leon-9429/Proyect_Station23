@@ -195,7 +195,9 @@ public class InicioAdministrador extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtActualizarActionPerformed
 
     private void jbtTarifarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtTarifarioActionPerformed
-        // TODO add your handling code here:
+        ActualizarTarifario tarifario = new ActualizarTarifario();
+        tarifario.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jbtTarifarioActionPerformed
 
     private void jbtLugares1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtLugares1ActionPerformed

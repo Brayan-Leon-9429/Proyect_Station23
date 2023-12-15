@@ -14,7 +14,7 @@ import java.sql.SQLException;
  *
  * @author Braya
  */
-public class DaoLogin {
+public class DaoAdministrador {
 
     private ConexionBD bd = new ConexionBD();
     private String mensaje;
@@ -23,9 +23,9 @@ public class DaoLogin {
         Boolean confirmacion = false;
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM")
-                .append(" login")
-                .append(" WHERE usuario = ?")
-                .append(" AND contraseña = ?");
+                .append(" administrador")
+                .append(" WHERE username = ?")
+                .append(" AND password = ?");
 
         try (Connection cn = bd.getConexion()) {
             PreparedStatement ps = cn.prepareStatement(sql.toString());

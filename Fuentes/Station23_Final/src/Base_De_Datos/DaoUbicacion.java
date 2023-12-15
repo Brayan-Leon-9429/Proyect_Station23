@@ -16,15 +16,12 @@ public class DaoUbicacion {
 
     public List<Ubicacion> ubicacionSel() {
         List<Ubicacion> lista = null;
-
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT ")
                 .append("id_ubicacion,")
-                .append("tipo_vehiculo,")
-                .append("codigo_lugar,")
+                .append("id_tipo_vehiculo,")
                 .append("estado")
                 .append(" FROM ubicacion");
-
         try (Connection c = bd.getConexion()) {
             PreparedStatement ps = c.prepareStatement(sql.toString());
             ResultSet rs = ps.executeQuery();
@@ -32,9 +29,8 @@ public class DaoUbicacion {
             while (rs.next()) {
                 Ubicacion ubicacion = new Ubicacion();
                 ubicacion.setId_ubicacion(rs.getString(1));
-                ubicacion.setTipo_vehiculo(rs.getString(2));
-                ubicacion.setCodigo_lugar(rs.getString(3));
-                ubicacion.setEstado(rs.getString(4));
+                ubicacion.setId_tipo_vehiculo(rs.getInt(2));
+                ubicacion.setEstado(rs.getString(3));
                 lista.add(ubicacion);
             }
         } catch (Exception e) {
@@ -48,8 +44,7 @@ public class DaoUbicacion {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT ")
                 .append("id_ubicacion,")
-                .append("tipo_vehiculo,")
-                .append("codigo_lugar,")
+                .append("id_tipo_vehiculo,")
                 .append("estado")
                 .append(" FROM ubicacion")
                 .append(" WHERE id_ubicacion = ?");
@@ -61,9 +56,8 @@ public class DaoUbicacion {
             if (rs.next()) {
                 ubicacion = new Ubicacion();
                 ubicacion.setId_ubicacion(rs.getString(1));
-                ubicacion.setTipo_vehiculo(rs.getString(2));
-                ubicacion.setCodigo_lugar(rs.getString(3));
-                ubicacion.setEstado(rs.getString(4));
+                ubicacion.setId_tipo_vehiculo(rs.getInt(2));
+                ubicacion.setEstado(rs.getString(3));
             } else {
                 mensaje = "Sin datos";
             }
