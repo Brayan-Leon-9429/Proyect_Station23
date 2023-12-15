@@ -518,7 +518,6 @@ public class DaoRegistroFinal {
                 .append(" FROM registro_inicial JOIN ubicacion")
                 .append(" ON registro_inicial.id_ubicacion = ubicacion.id_ubicacion")
                 .append(" WHERE registro_inicial.placa= ?");
-
         try (Connection cn = conexionBD.getConexion()) {
             PreparedStatement ps = cn.prepareStatement(sql.toString());
             ps.setString(1, placa);
@@ -530,7 +529,6 @@ public class DaoRegistroFinal {
                 reguistro_final.setHora_entrada(rs.getTimestamp(3));
                 reguistro_final.setId_ubicacion(rs.getString(4));
                 reguistro_final.setTipo_vehiculo(rs.getString(5));
-
             } else {
                 mensaje = "Sin datos";
             }

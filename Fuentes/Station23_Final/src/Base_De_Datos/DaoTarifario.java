@@ -26,10 +26,11 @@ public class DaoTarifario {
         Tarifario tarifario = null;
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT ")
+                .append("id_tarifa,")
                 .append("tarifa_hora,")
                 .append("comision")
                 .append(" FROM tarifario")
-                .append(" WHERE tipo_vehiculo = ?");
+                .append(" WHERE id_tipo_vehiculo = ?");
         try (Connection cn = bd.getConexion()) {
             PreparedStatement ps = cn.prepareStatement(sql.toString());
             ps.setInt(1, tipo_vehiculo);
@@ -37,8 +38,9 @@ public class DaoTarifario {
             if (rs.next()) {
                 tarifario = new Tarifario();
                 tarifario.setTipo_vehiculo(tipo_vehiculo);
-                tarifario.setTarifa_hora(rs.getDouble(1));
-                tarifario.setComision(rs.getDouble(2));
+                tarifario.setId_tarifa(rs.getInt(1));
+                tarifario.setTarifa_hora(rs.getDouble(2));
+                tarifario.setComision(rs.getDouble(3));
             } else {
                 mensaje = "Sin datos";
             }

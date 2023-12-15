@@ -4,30 +4,34 @@
  */
 package clases;
 
-import Base_De_Datos.DaoRegistroFinal;
+import Base_De_Datos.DaoPago;
+import Base_De_Datos.DaoRegistro;
+import Base_De_Datos.DaoTipoVehiculo;
+import Base_De_Datos.DaoVehiculo;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.Barcode39;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-
 
 /**
  *
  * @author danda
  */
 public class boleta {
-    
-    DaoRegistroFinal Pdf = new DaoRegistroFinal();
-        RegistroFinal ClasPDF;
 
-    
+    Registro registro = new Registro();
+    DaoRegistro daoRegistroFinal = new DaoRegistro();
+    DaoTipoVehiculo daoTipoVehiculo = new DaoTipoVehiculo();
+    DaoVehiculo daoVehiculo = new DaoVehiculo();
+    DaoPago daoPago = new DaoPago();
 
-    public void ticket_Salida(String placa) {
+    public void ticket_Salida(String id_vehiculo) {
         // Obtén los datos de la base de datos y asigna a ClasPDF
-        ClasPDF = Pdf.buscarPlaca(placa);
+        registro = daoRegistroFinal.buscarIDVehiculo(id_vehiculo);
         SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
         // Variables de fuentes
@@ -37,12 +41,12 @@ public class boleta {
         try {
             // Crear un nuevo documento PDF
             Document doc = new Document(PageSize.A6);
-            String dest = "D:/reporte.pdf";
+            String dest = "C:/Users/Braya/OneDrive/Escritorio/reporte.pdf";
             PdfWriter pdf = PdfWriter.getInstance(doc, new FileOutputStream(dest));
             doc.open();
 
             Barcode39 bc = new Barcode39();
-            bc.setCode(placa);
+            bc.setCode(id_vehiculo);
             Image img = bc.createImageWithBarcode(pdf.getDirectContent(), BaseColor.BLACK, BaseColor.BLACK);
             img.scalePercent(210);
             img.setAlignment(Element.ALIGN_CENTER);
@@ -51,13 +55,16 @@ public class boleta {
             para.setAlignment(Element.ALIGN_CENTER);
 
             // Agregar los campos del objeto ClasPDF
-            String codigoReg = ClasPDF.getCodigo_reg();
-            String tipoVehiculo = ClasPDF.getTipo_vehiculo();
-            String idUbicacion = ClasPDF.getId_ubicacion();
-            String horaEntrada = formato.format(ClasPDF.getHora_entrada());
-            String horaSalida = formato.format(ClasPDF.getHora_salida());
-            String pagoTotal = String.valueOf(ClasPDF.getPago_total());
-            String horaPago = formato.format(ClasPDF.getHora_pago());
+            Vehiculo v = daoVehiculo.vehiculoGet(registro.getId_vehiculo());
+            String tipo = daoTipoVehiculo.obtenerTipo(v.getId_tipo_vehiculo());
+            String codigoReg = registro.getId_vehiculo();
+            String tipoVehiculo = tipo;
+            String idUbicacion = registro.getId_ubicacion();
+            String horaEntrada = formato.format(registro.getHora_entrada());
+            String horaSalida = formato.format(registro.getHora_salida());
+            Pago pago = daoPago.pagoGet(registro.getId_pago());
+            String pagoTotal = String.valueOf(pago);
+            String horaPago = formato.format(pago.getHora_pago());
 
             Paragraph para11 = new Paragraph("Código Registro: " + codigoReg, fo);
             para11.setAlignment(Element.ALIGN_CENTER);
@@ -93,14 +100,22 @@ public class boleta {
             doc.add(img);
             doc.close();
 
-            // Abrir el documento PDF con el visor predeterminado
-            if ((new File(dest)).exists()) {
-                Process p = Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + dest);
-                p.waitFor();
-            } else {
-                System.out.println("El documento no existe");
-            }
+            abrirEnEdge(dest);
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void abrirEnEdge(String archivo) {
+        try {
+            String osName = System.getProperty("os.name").toLowerCase();
+            if (osName.contains("win")) {
+                ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", "start microsoft-edge: " + archivo);
+                builder.start();
+            } else {
+                System.out.println("No se puede abrir en Edge en este sistema operativo.");
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

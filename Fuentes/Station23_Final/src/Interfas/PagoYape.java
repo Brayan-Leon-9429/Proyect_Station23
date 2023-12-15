@@ -4,7 +4,8 @@
  */
 package Interfas;
 
-import clases.RegistroFinal;
+import clases.Pago;
+import clases.Registro;
 import java.awt.event.ActionEvent;
 import java.util.Date;
 import javax.swing.Timer;
@@ -15,16 +16,19 @@ import javax.swing.Timer;
  */
 public class PagoYape extends javax.swing.JFrame {
 
-    public PagoYape(RegistroFinal registroFinal) {
+    Registro registro = new Registro();
+    Pago pago = new Pago();
+    
+    public PagoYape(Registro r, Pago p) {
         initComponents();
-        transicion(registroFinal);
+        transicion(r,p);
     }
 
-    private void transicion(RegistroFinal registroFinal) {
+    private void transicion(Registro r, Pago p) {
         Timer timer = new Timer(3000, (ActionEvent e) -> {
             Date date = new Date();
-            registroFinal.setHora_pago(date);
-            Boleta boleta = new Boleta(registroFinal);
+            p.setHora_pago(date);
+            Boleta boleta = new Boleta(r,p);
             boleta.setVisible(true);
             cerrarJFrame();
         });
@@ -34,6 +38,11 @@ public class PagoYape extends javax.swing.JFrame {
 
     private void cerrarJFrame() {
         this.dispose();
+    }
+    
+    private void pagar(){
+        Date date = new Date();
+        pago.setHora_pago(date);
     }
 
     @SuppressWarnings("unchecked")

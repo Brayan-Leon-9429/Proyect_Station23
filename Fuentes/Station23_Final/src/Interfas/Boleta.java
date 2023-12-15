@@ -4,8 +4,11 @@
  */
 package Interfas;
 
-import clases.RegistroFinal;
-import Base_De_Datos.DaoRegistroFinal;
+import Base_De_Datos.DaoRegistro;
+import Base_De_Datos.DaoVehiculo;
+import clases.Pago;
+import clases.Registro;
+import clases.Vehiculo;
 import clases.boleta;
 
 /**
@@ -13,15 +16,17 @@ import clases.boleta;
  * @author danda
  */
 public class Boleta extends javax.swing.JFrame {
-    RegistroFinal reg_fin = new RegistroFinal();
-    DaoRegistroFinal daoRegistroFinal = new DaoRegistroFinal();
-    
-    public Boleta(RegistroFinal registroFinal) {
+
+    Registro registro = new Registro();
+    Pago pago = new Pago();
+    DaoRegistro daoRegistroFinal = new DaoRegistro();
+    DaoVehiculo daoVehiculo = new DaoVehiculo();
+
+    public Boleta(Registro r, Pago p) {
         initComponents();
-        reg_fin=registroFinal;
+        registro = r;
+        pago = p;
     }
-    
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -89,9 +94,9 @@ public class Boleta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPagarActionPerformed
-        boleta hoja=new boleta();
-        hoja.ticket_Salida(reg_fin.getPlaca());
-       daoRegistroFinal.regIni(reg_fin);
+        boleta hoja = new boleta();
+        hoja.ticket_Salida(registro.getId_vehiculo());
+        daoRegistroFinal.regFinIns(registro, pago);
         System.out.println(daoRegistroFinal.getMensaje());
         InicioCliente inicioCliente = new InicioCliente();
         inicioCliente.setVisible(true);

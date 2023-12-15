@@ -43,31 +43,33 @@ public class DaoPago {
         return mensaje;
     }
 
-    public Vehiculo vehiculoGet(String idVehiculo) {
-        Vehiculo v = null;
+    public Pago pagoGet(String idPago) {
+        Pago p = null;
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT ")
-                .append("id_vehiculo,")
-                .append("id_tipo_vehiculo,")
-                .append("placa")
-                .append(" FROM vehiculo")
-                .append(" WHERE id_vehiculo = ?");
+                .append("id_pago, ")
+                .append("modalidad, ")
+                .append("pago_total, ")
+                .append("hora_pago")
+                .append(" FROM pago")
+                .append(" WHERE id_pago = ?");
         try (Connection cn = conexionBD.getConexion()) {
             PreparedStatement ps = cn.prepareStatement(sql.toString());
-            ps.setString(1, idVehiculo);
+            ps.setString(1, idPago);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                v = new Vehiculo();
-                v.setId_vehiculo(rs.getString(1));
-                v.setId_tipo_vehiculo(rs.getInt(2));
-                v.setPlaca(rs.getString(3));
+                p = new Pago();
+                p.setId_pago(rs.getString(1));
+                p.setModalidad(rs.getString(2));
+                p.setPago_total(rs.getDouble(3));
+                p.setHora_pago(rs.getTimestamp(4));
             } else {
                 mensaje = "Sin datos";
             }
         } catch (SQLException e) {
             mensaje = e.getMessage();
         }
-        return v;
+        return p;
     }
 
     public String idPago() {

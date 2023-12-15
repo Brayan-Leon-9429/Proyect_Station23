@@ -12,6 +12,7 @@ public class Tarifario {
     private int tipo_vehiculo;
     private Double tarifa_hora;
     private Double comision;
+    private int id_tarifa;
 
     public Tarifario() {
     }
@@ -38,6 +39,14 @@ public class Tarifario {
 
     public void setTipo_vehiculo(int tipo_vehiculo) {
         this.tipo_vehiculo = tipo_vehiculo;
+    }
+
+    public int getId_tarifa() {
+        return id_tarifa;
+    }
+
+    public void setId_tarifa(int id_tarifa) {
+        this.id_tarifa = id_tarifa;
     }
     
     

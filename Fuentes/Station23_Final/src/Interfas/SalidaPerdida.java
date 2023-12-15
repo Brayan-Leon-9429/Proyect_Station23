@@ -4,14 +4,15 @@
  */
 package Interfas;
 
-import clases.RegistroFinal;
-import Base_De_Datos.DaoRegistroFinal;
+import Base_De_Datos.DaoRegistro;
+import clases.Registro;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 public class SalidaPerdida extends javax.swing.JFrame {
 
-    DaoRegistroFinal dao_rf = new DaoRegistroFinal();
-    RegistroFinal reg_fin = new RegistroFinal();
+    DaoRegistro daoRegistro = new DaoRegistro();
+    Registro registro = new Registro();
 
     public SalidaPerdida() {
         initComponents();
@@ -102,12 +103,16 @@ public class SalidaPerdida extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Date hora_s = new Date();
-        reg_fin = dao_rf.buscarPlaca(Placax.getText());
-        System.out.println(dao_rf.getMensaje());
-        reg_fin.setHora_salida(hora_s);
-        ConfirmarRetiro SBR = new ConfirmarRetiro(reg_fin, 2);
-        SBR.setVisible(true);
-        this.dispose();
+        registro = daoRegistro.buscarPlaca(Placax.getText());
+        if (registro != null) {
+            System.out.println(daoRegistro.getMensaje());
+            registro.setHora_salida(hora_s);
+            ConfirmarRetiro SBR = new ConfirmarRetiro(registro, 2);
+            SBR.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingreso un codigo no registrado, intentelo de nuevo");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

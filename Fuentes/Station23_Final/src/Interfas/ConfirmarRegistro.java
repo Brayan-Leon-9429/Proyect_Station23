@@ -5,11 +5,11 @@
 package Interfas;
 
 import Base_De_Datos.DaoRegistro;
-import clases.RegistroInicial;
-import Base_De_Datos.DaoRegistroInicial;
+import Base_De_Datos.DaoTarifario;
 import Base_De_Datos.DaoTipoVehiculo;
 import Base_De_Datos.DaoVehiculo;
 import clases.Registro;
+import clases.Tarifario;
 import clases.Vehiculo;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -23,6 +23,7 @@ public class ConfirmarRegistro extends javax.swing.JFrame {
     DaoRegistro daoRegistro = new DaoRegistro();
     DaoVehiculo daoVehiculo = new DaoVehiculo();
     DaoTipoVehiculo daoTipoVehiculo = new DaoTipoVehiculo();
+    DaoTarifario daoTarifario = new DaoTarifario();
     Registro registro;
     
     public ConfirmarRegistro() {
@@ -160,7 +161,12 @@ public class ConfirmarRegistro extends javax.swing.JFrame {
         Date date = new Date();
         registro.setHora_entrada(date);
         int n = 1;
-        daoRegistro.regIniIns(registro.getId_ubicacion(), n, registro.getId_vehiculo(), registro.getHora_entrada());
+        Vehiculo v = daoVehiculo.vehiculoGet(registro.getId_vehiculo());
+        System.out.println(daoVehiculo.getMensaje());
+        Tarifario t = daoTarifario.tarifarioGet(v.getId_tipo_vehiculo());
+        System.out.println(daoTarifario.getMensaje());
+        int id = t.getId_tarifa();
+        daoRegistro.regIniIns(registro.getId_ubicacion(), n, registro.getId_vehiculo(), registro.getHora_entrada(), id);
         System.out.println(daoRegistro.getMensaje());
         JOptionPane.showMessageDialog(this, "Se registro correctamente", "Solicitud", JOptionPane.INFORMATION_MESSAGE);
         InicioCliente inicioCliente = new InicioCliente();

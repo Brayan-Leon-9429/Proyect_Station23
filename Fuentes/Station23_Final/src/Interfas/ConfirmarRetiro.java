@@ -10,7 +10,6 @@ package Interfas;
  * @author danda
  */
 import Base_De_Datos.DaoPago;
-import clases.RegistroFinal;
 import clases.Tarifario;
 import Base_De_Datos.DaoTarifario;
 import Base_De_Datos.DaoTipoVehiculo;
@@ -51,7 +50,7 @@ public class ConfirmarRetiro extends javax.swing.JFrame {
         String tipo = daoTipoVehiculo.obtenerTipo(v.getId_tipo_vehiculo());
         jtfTipoVehi.setText(tipo);
         comision(origen);
-        calcularHorasYValorAPagar();
+        pago=calcularHorasYValorAPagar();
     }
 
     @SuppressWarnings("unchecked")
@@ -274,8 +273,8 @@ public class ConfirmarRetiro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPagarActionPerformed
-        daoUbicacion.ubicacionUpdEstado(reg_fin.getId_ubicacion(), "libre");
-        PagoYape yap = new PagoYape(reg_fin);
+        daoUbicacion.ubicacionUpdEstado(registro.getId_ubicacion(), "libre");
+        PagoYape yap = new PagoYape(registro, pago);
         yap.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jbtPagarActionPerformed
@@ -285,12 +284,10 @@ public class ConfirmarRetiro extends javax.swing.JFrame {
     }//GEN-LAST:event_jtfPlacaActionPerformed
 
     private Pago calcularHorasYValorAPagar() {
+        Pago p = new Pago();
         try {
-            Pago p = new Pago();
-            
             Date horaEntrada = formato.parse(Hora_E);
             Date horaSalida = formato.parse(Hora_S);
-
             long diferenciaEnMilisegundos = horaSalida.getTime() - horaEntrada.getTime();
 
             if (diferenciaEnMilisegundos < 60 * 60 * 1000) {
@@ -307,23 +304,24 @@ public class ConfirmarRetiro extends javax.swing.JFrame {
             String codigo = daoPago.idPago();
             p.setId_pago(codigo);
             p.setPago_total(valorAPagar);
-            
             jtfCntHoras.setText(String.format("%.2f", diferenciaEnHoras));
             jtfPago.setText("S/. " + String.format("%.2f", valorAPagar));
-
         } catch (ParseException e) {
             System.out.println("Error al calcular horas y valor a pagar: " + e.getMessage());
         }
+        return p;
     }
 
     private void comision(int n) {
         switch (n) {
             case 1 -> {
                 jtfComision.setText("S/. 0.00");
-                tarifario = daoTarifario.tarifarioGet(reg_fin.getTipo_vehiculo());
+                Vehiculo v = daoVehiculo.vehiculoGet(registro.getId_vehiculo());
+                tarifario = daoTarifario.tarifarioGet(v.getId_tipo_vehiculo());
             }
             case 2 -> {
-                tarifario = daoTarifario.tarifarioGet(reg_fin.getTipo_vehiculo());
+                Vehiculo v = daoVehiculo.vehiculoGet(registro.getId_vehiculo());
+                tarifario = daoTarifario.tarifarioGet(v.getId_tipo_vehiculo());
                 jtfComision.setText("S/. " + String.valueOf(tarifario.getComision()));
                 comision = tarifario.getComision();
             }
