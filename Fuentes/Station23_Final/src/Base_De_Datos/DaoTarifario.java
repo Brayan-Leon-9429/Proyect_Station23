@@ -74,6 +74,29 @@ public class DaoTarifario {
         return lista;
     }
     
+    public String cambiarTarifario(int id_vehiculo, Double tarifa, Double comision){
+        StringBuilder sql = new StringBuilder();
+        sql.append("UPDATE tarifario SET ")
+                .append("tarifa_hora = ?,")
+                .append("comision = ?")
+                .append(" WHERE id_tipo_vehiculo = ? ");
+        try (Connection c = bd.getConexion()) {
+            PreparedStatement ps = c.prepareStatement(sql.toString());
+            ps.setDouble(1, tarifa);
+            ps.setDouble(2, comision);
+            ps.setInt(3, id_vehiculo);
+            int cont = ps.executeUpdate();
+            if (cont == 0) {
+                mensaje = "No se pudo actualizar";
+            }
+            mensaje="Se actualizo la tarifa correctamente";
+        } catch (SQLException e) {
+            mensaje = e.getMessage();
+        }
+        return mensaje;
+    }
+    
+    
     public String getMensaje() {
         return mensaje;
     }

@@ -15,10 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DaoRegistroFinal {
-    
-     private final ConexionBD conexionBD = new ConexionBD();
+
+    private final ConexionBD conexionBD = new ConexionBD();
     private String mensaje;
-    
+
     public List<RegistroFinal> regFinTodoSel(String fecha) {
         List<RegistroFinal> lista = null;
         StringBuilder sql = new StringBuilder();
@@ -32,7 +32,7 @@ public class DaoRegistroFinal {
                 .append(" FROM registro_final")
                 .append(" WHERE DATE(hora_entrada) = ?")
                 .append(" OR DATE(hora_salida) = ?");
-        try ( Connection cn = conexionBD.getConexion()) {
+        try (Connection cn = conexionBD.getConexion()) {
             PreparedStatement ps = cn.prepareStatement(sql.toString());
             ps.setString(1, fecha);
             ps.setString(2, fecha);
@@ -53,7 +53,7 @@ public class DaoRegistroFinal {
         }
         return lista;
     }
-    
+
     public List<RegistroFinal> regFinTodoVehiSel(String tipo_vehi, String fecha) {
         List<RegistroFinal> lista = null;
         StringBuilder sql = new StringBuilder();
@@ -68,7 +68,7 @@ public class DaoRegistroFinal {
                 .append(" WHERE tipo_vehiculo = ?")
                 .append(" AND (DATE(hora_entrada) = ?")
                 .append(" OR DATE(hora_salida) = ?)");
-        try ( Connection cn = conexionBD.getConexion()) {
+        try (Connection cn = conexionBD.getConexion()) {
             PreparedStatement ps = cn.prepareStatement(sql.toString());
             ps.setString(1, tipo_vehi);
             ps.setString(2, fecha);
@@ -90,7 +90,7 @@ public class DaoRegistroFinal {
         }
         return lista;
     }
-    
+
     public List<RegistroFinal> regFinPisoASel(String fecha) {
         List<RegistroFinal> lista = null;
         StringBuilder sql = new StringBuilder();
@@ -105,7 +105,7 @@ public class DaoRegistroFinal {
                 .append(" WHERE id_ubicacion LIKE 'A%'")
                 .append(" AND (DATE(hora_entrada) = ?")
                 .append(" OR DATE(hora_salida) = ?)");
-        try ( Connection cn = conexionBD.getConexion()) {
+        try (Connection cn = conexionBD.getConexion()) {
             PreparedStatement ps = cn.prepareStatement(sql.toString());
             ps.setString(1, fecha);
             ps.setString(2, fecha);
@@ -126,7 +126,7 @@ public class DaoRegistroFinal {
         }
         return lista;
     }
-    
+
     public List<RegistroFinal> regFinPisoAVehiSel(String tipo_vehi, String fecha) {
         List<RegistroFinal> lista = null;
         StringBuilder sql = new StringBuilder();
@@ -142,7 +142,7 @@ public class DaoRegistroFinal {
                 .append(" AND tipo_vehiculo = ?")
                 .append(" AND (DATE(hora_entrada) = ?")
                 .append(" OR DATE(hora_salida) = ?)");
-        try ( Connection cn = conexionBD.getConexion()) {
+        try (Connection cn = conexionBD.getConexion()) {
             PreparedStatement ps = cn.prepareStatement(sql.toString());
             ps.setString(1, tipo_vehi);
             ps.setString(2, fecha);
@@ -164,7 +164,7 @@ public class DaoRegistroFinal {
         }
         return lista;
     }
-    
+
     public List<RegistroFinal> regFinPisoBSel(String fecha) {
         List<RegistroFinal> lista = null;
         StringBuilder sql = new StringBuilder();
@@ -179,7 +179,7 @@ public class DaoRegistroFinal {
                 .append(" WHERE id_ubicacion LIKE 'B%'")
                 .append(" AND (DATE(hora_entrada) = ?")
                 .append(" OR DATE(hora_salida) = ?)");
-        try ( Connection cn = conexionBD.getConexion()) {
+        try (Connection cn = conexionBD.getConexion()) {
             PreparedStatement ps = cn.prepareStatement(sql.toString());
             ps.setString(1, fecha);
             ps.setString(2, fecha);
@@ -200,7 +200,7 @@ public class DaoRegistroFinal {
         }
         return lista;
     }
-    
+
     public List<RegistroFinal> regFinPisoBVehiSel(String tipo_vehi, String fecha) {
         List<RegistroFinal> lista = null;
         StringBuilder sql = new StringBuilder();
@@ -216,7 +216,7 @@ public class DaoRegistroFinal {
                 .append(" AND tipo_vehiculo = ?")
                 .append(" AND (DATE(hora_entrada) = ?")
                 .append(" OR DATE(hora_salida) = ?)");
-        try ( Connection cn = conexionBD.getConexion()) {
+        try (Connection cn = conexionBD.getConexion()) {
             PreparedStatement ps = cn.prepareStatement(sql.toString());
             ps.setString(1, tipo_vehi);
             ps.setString(2, fecha);
@@ -238,9 +238,8 @@ public class DaoRegistroFinal {
         }
         return lista;
     }
-    
+
     //..........................................
-    
     public List<RegistroFinal> regFinTodoSelRango(String fechaIni, String fechaFinal) {
         List<RegistroFinal> lista = null;
         StringBuilder sql = new StringBuilder();
@@ -254,7 +253,7 @@ public class DaoRegistroFinal {
                 .append(" FROM registro_final")
                 .append(" WHERE (DATE(hora_entrada) BETWEEN ? AND ?) ")
                 .append(" OR (DATE(hora_salida) BETWEEN ? AND ?)");
-        try ( Connection cn = conexionBD.getConexion()) {
+        try (Connection cn = conexionBD.getConexion()) {
             PreparedStatement ps = cn.prepareStatement(sql.toString());
             ps.setString(1, fechaIni);
             ps.setString(2, fechaFinal);
@@ -277,7 +276,7 @@ public class DaoRegistroFinal {
         }
         return lista;
     }
-    
+
     public List<RegistroFinal> regFinTodoVehiSelRango(String tipo_vehi, String fechaIni, String fechaFinal) {
         List<RegistroFinal> lista = null;
         StringBuilder sql = new StringBuilder();
@@ -292,7 +291,7 @@ public class DaoRegistroFinal {
                 .append(" WHERE tipo_vehiculo = ?")
                 .append(" AND (DATE(hora_entrada) BETWEEN ? AND ?) ")
                 .append(" OR (DATE(hora_salida) BETWEEN ? AND ?)");
-        try ( Connection cn = conexionBD.getConexion()) {
+        try (Connection cn = conexionBD.getConexion()) {
             PreparedStatement ps = cn.prepareStatement(sql.toString());
             ps.setString(1, tipo_vehi);
             ps.setString(2, fechaIni);
@@ -316,7 +315,7 @@ public class DaoRegistroFinal {
         }
         return lista;
     }
-    
+
     public List<RegistroFinal> regFinPisoASelRango(String fechaIni, String fechaFinal) {
         List<RegistroFinal> lista = null;
         StringBuilder sql = new StringBuilder();
@@ -331,7 +330,7 @@ public class DaoRegistroFinal {
                 .append(" WHERE id_ubicacion LIKE 'A%'")
                 .append(" AND (DATE(hora_entrada) BETWEEN ? AND ?) ")
                 .append(" OR (DATE(hora_salida) BETWEEN ? AND ?)");
-        try ( Connection cn = conexionBD.getConexion()) {
+        try (Connection cn = conexionBD.getConexion()) {
             PreparedStatement ps = cn.prepareStatement(sql.toString());
             ps.setString(1, fechaIni);
             ps.setString(2, fechaFinal);
@@ -354,7 +353,7 @@ public class DaoRegistroFinal {
         }
         return lista;
     }
-    
+
     public List<RegistroFinal> regFinPisoAVehiSelRango(String tipo_vehi, String fechaIni, String fechaFinal) {
         List<RegistroFinal> lista = null;
         StringBuilder sql = new StringBuilder();
@@ -370,7 +369,7 @@ public class DaoRegistroFinal {
                 .append(" AND tipo_vehiculo = ?")
                 .append(" AND (DATE(hora_entrada) BETWEEN ? AND ?) ")
                 .append(" OR (DATE(hora_salida) BETWEEN ? AND ?)");
-        try ( Connection cn = conexionBD.getConexion()) {
+        try (Connection cn = conexionBD.getConexion()) {
             PreparedStatement ps = cn.prepareStatement(sql.toString());
             ps.setString(1, tipo_vehi);
             ps.setString(2, fechaIni);
@@ -394,7 +393,7 @@ public class DaoRegistroFinal {
         }
         return lista;
     }
-    
+
     public List<RegistroFinal> regFinPisoBSelRango(String fechaIni, String fechaFinal) {
         List<RegistroFinal> lista = null;
         StringBuilder sql = new StringBuilder();
@@ -409,7 +408,7 @@ public class DaoRegistroFinal {
                 .append(" WHERE id_ubicacion LIKE 'B%'")
                 .append(" AND (DATE(hora_entrada) BETWEEN ? AND ?) ")
                 .append(" OR (DATE(hora_salida) BETWEEN ? AND ?)");
-        try ( Connection cn = conexionBD.getConexion()) {
+        try (Connection cn = conexionBD.getConexion()) {
             PreparedStatement ps = cn.prepareStatement(sql.toString());
             ps.setString(1, fechaIni);
             ps.setString(2, fechaFinal);
@@ -432,7 +431,7 @@ public class DaoRegistroFinal {
         }
         return lista;
     }
-    
+
     public List<RegistroFinal> regFinPisoBVehiSelRango(String tipo_vehi, String fechaIni, String fechaFinal) {
         List<RegistroFinal> lista = null;
         StringBuilder sql = new StringBuilder();
@@ -448,7 +447,7 @@ public class DaoRegistroFinal {
                 .append(" AND tipo_vehiculo = ?")
                 .append(" AND (DATE(hora_entrada) BETWEEN ? AND ?) ")
                 .append(" OR (DATE(hora_salida) BETWEEN ? AND ?)");
-        try ( Connection cn = conexionBD.getConexion()) {
+        try (Connection cn = conexionBD.getConexion()) {
             PreparedStatement ps = cn.prepareStatement(sql.toString());
             ps.setString(1, tipo_vehi);
             ps.setString(2, fechaIni);
@@ -497,7 +496,7 @@ public class DaoRegistroFinal {
                 reguistro_final.setHora_entrada(rs.getTimestamp(3));
                 reguistro_final.setId_ubicacion(rs.getString(4));
                 reguistro_final.setTipo_vehiculo(rs.getString(5));
-                
+
             } else {
                 mensaje = "Sin datos";
             }
@@ -507,7 +506,7 @@ public class DaoRegistroFinal {
         return reguistro_final;
     }
 
-    public RegistroFinal buscarPlaca (String placa) {
+    public RegistroFinal buscarPlaca(String placa) {
         RegistroFinal reguistro_final = null;
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT ")
@@ -531,7 +530,7 @@ public class DaoRegistroFinal {
                 reguistro_final.setHora_entrada(rs.getTimestamp(3));
                 reguistro_final.setId_ubicacion(rs.getString(4));
                 reguistro_final.setTipo_vehiculo(rs.getString(5));
-                
+
             } else {
                 mensaje = "Sin datos";
             }
@@ -540,7 +539,7 @@ public class DaoRegistroFinal {
         }
         return reguistro_final;
     }
-    
+
     public String regIni(RegistroFinal registroFinal) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String formatHoraEntrada = formatter.format(registroFinal.getHora_entrada());
@@ -557,7 +556,7 @@ public class DaoRegistroFinal {
                 .append("pago_total, ")
                 .append("hora_pago")
                 .append(") VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        try ( Connection cn = conexionBD.getConexion()) {
+        try (Connection cn = conexionBD.getConexion()) {
             PreparedStatement ps = cn.prepareStatement(sql.toString());
             ps.setString(1, registroFinal.getCodigo_reg());
             ps.setString(2, registroFinal.getPlaca());
@@ -576,7 +575,7 @@ public class DaoRegistroFinal {
         }
         return mensaje;
     }
-    
+
     public String getMensaje() {
         return mensaje;
     }
