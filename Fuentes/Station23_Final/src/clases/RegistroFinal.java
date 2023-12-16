@@ -8,24 +8,15 @@ import java.util.Date;
  * @author danda
  */
 public class RegistroFinal {
-    private String codigo_reg;
+    
     private String placa;
     private Date hora_entrada;
     private Date hora_salida;
     private String id_ubicacion;
     private String tipo_vehiculo;
     private Double pago_total;
-    private Date hora_pago;
 
     public RegistroFinal() {
-    }
-
-    public String getCodigo_reg() {
-        return codigo_reg;
-    }
-
-    public void setCodigo_reg(String codigo_reg) {
-        this.codigo_reg = codigo_reg;
     }
 
     public String getPlaca() {
@@ -76,13 +67,7 @@ public class RegistroFinal {
         this.pago_total = pago_total;
     }
 
-    public Date getHora_pago() {
-        return hora_pago;
-    }
-
-    public void setHora_pago(Date hora_pago) {
-        this.hora_pago = hora_pago;
-    }
+    
 
     
     

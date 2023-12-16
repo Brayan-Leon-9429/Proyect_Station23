@@ -74,12 +74,12 @@
                   <EmptySpace pref="104" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="jbtLugares1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jbtBloquearLugares" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jbtReporte" min="-2" pref="164" max="-2" attributes="0"/>
+                              <Component id="jbtReporteDiario" min="-2" pref="164" max="-2" attributes="0"/>
                               <Component id="jbtCupones" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
@@ -99,12 +99,12 @@
                   <EmptySpace pref="65" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jbtRegistros" alignment="3" min="-2" pref="63" max="-2" attributes="0"/>
-                      <Component id="jbtLugares1" alignment="3" min="-2" pref="63" max="-2" attributes="0"/>
+                      <Component id="jbtBloquearLugares" alignment="3" min="-2" pref="63" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jbtTarifario" alignment="3" min="-2" pref="63" max="-2" attributes="0"/>
-                      <Component id="jbtReporte" alignment="3" min="-2" pref="63" max="-2" attributes="0"/>
+                      <Component id="jbtReporteDiario" alignment="3" min="-2" pref="63" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="45" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -131,7 +131,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtRegistrosActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jbtReporte">
+        <Component class="javax.swing.JButton" name="jbtReporteDiario">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="6" green="7f" red="f9" type="rgb"/>
@@ -142,7 +142,7 @@
             <Property name="text" type="java.lang.String" value="Reporte Diario"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtReporteActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtReporteDiarioActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
@@ -196,7 +196,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtTarifarioActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jbtLugares1">
+        <Component class="javax.swing.JButton" name="jbtBloquearLugares">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="6" green="7f" red="f9" type="rgb"/>
@@ -207,7 +207,7 @@
             <Property name="text" type="java.lang.String" value="Bloquear Ubicaciones"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtLugares1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtBloquearLugaresActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jbtCupones">

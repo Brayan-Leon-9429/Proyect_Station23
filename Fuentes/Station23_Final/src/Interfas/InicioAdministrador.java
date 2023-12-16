@@ -21,12 +21,12 @@ public class InicioAdministrador extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jbtRegistros = new javax.swing.JButton();
-        jbtReporte = new javax.swing.JButton();
+        jbtReporteDiario = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jbtRetroceder = new javax.swing.JButton();
         jbtActualizar = new javax.swing.JButton();
         jbtTarifario = new javax.swing.JButton();
-        jbtLugares1 = new javax.swing.JButton();
+        jbtBloquearLugares = new javax.swing.JButton();
         jbtCupones = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -42,12 +42,12 @@ public class InicioAdministrador extends javax.swing.JFrame {
             }
         });
 
-        jbtReporte.setBackground(new java.awt.Color(249, 127, 6));
-        jbtReporte.setFont(new java.awt.Font("Racing Sans One", 0, 18)); // NOI18N
-        jbtReporte.setText("Reporte Diario");
-        jbtReporte.addActionListener(new java.awt.event.ActionListener() {
+        jbtReporteDiario.setBackground(new java.awt.Color(249, 127, 6));
+        jbtReporteDiario.setFont(new java.awt.Font("Racing Sans One", 0, 18)); // NOI18N
+        jbtReporteDiario.setText("Reporte Diario");
+        jbtReporteDiario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtReporteActionPerformed(evt);
+                jbtReporteDiarioActionPerformed(evt);
             }
         });
 
@@ -80,12 +80,12 @@ public class InicioAdministrador extends javax.swing.JFrame {
             }
         });
 
-        jbtLugares1.setBackground(new java.awt.Color(249, 127, 6));
-        jbtLugares1.setFont(new java.awt.Font("Racing Sans One", 0, 18)); // NOI18N
-        jbtLugares1.setText("Bloquear Ubicaciones");
-        jbtLugares1.addActionListener(new java.awt.event.ActionListener() {
+        jbtBloquearLugares.setBackground(new java.awt.Color(249, 127, 6));
+        jbtBloquearLugares.setFont(new java.awt.Font("Racing Sans One", 0, 18)); // NOI18N
+        jbtBloquearLugares.setText("Bloquear Ubicaciones");
+        jbtBloquearLugares.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtLugares1ActionPerformed(evt);
+                jbtBloquearLugaresActionPerformed(evt);
             }
         });
 
@@ -122,11 +122,11 @@ public class InicioAdministrador extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jbtLugares1)
+                        .addComponent(jbtBloquearLugares)
                         .addGap(62, 62, 62))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jbtReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbtReporteDiario, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jbtCupones))
                         .addGap(82, 82, 82))))
         );
@@ -135,18 +135,16 @@ public class InicioAdministrador extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jbtRetroceder)))
+                    .addComponent(jLabel1)
+                    .addComponent(jbtRetroceder))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbtLugares1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbtBloquearLugares, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtTarifario, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbtReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbtReporteDiario, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -178,11 +176,11 @@ public class InicioAdministrador extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jbtRegistrosActionPerformed
 
-    private void jbtReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtReporteActionPerformed
-        AdministrarLugaresPisoA administrarLugares = new AdministrarLugaresPisoA();
-        administrarLugares.setVisible(true);
+    private void jbtReporteDiarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtReporteDiarioActionPerformed
+        IngresosDiarios diarios = new IngresosDiarios();
+        diarios.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jbtReporteActionPerformed
+    }//GEN-LAST:event_jbtReporteDiarioActionPerformed
 
     private void jbtRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRetrocederActionPerformed
         Login lon = new Login();
@@ -195,27 +193,29 @@ public class InicioAdministrador extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtActualizarActionPerformed
 
     private void jbtTarifarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtTarifarioActionPerformed
-        ActualizarTarifario tarifario = new ActualizarTarifario();
+        AdministrarTarifario tarifario = new AdministrarTarifario();
         tarifario.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jbtTarifarioActionPerformed
 
-    private void jbtLugares1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtLugares1ActionPerformed
+    private void jbtBloquearLugaresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtBloquearLugaresActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jbtLugares1ActionPerformed
+    }//GEN-LAST:event_jbtBloquearLugaresActionPerformed
 
     private void jbtCuponesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCuponesActionPerformed
-        // TODO add your handling code here:
+        AdministrarCupones ac = new AdministrarCupones();
+        ac.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jbtCuponesActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton jbtActualizar;
+    private javax.swing.JButton jbtBloquearLugares;
     private javax.swing.JButton jbtCupones;
-    private javax.swing.JButton jbtLugares1;
     private javax.swing.JButton jbtRegistros;
-    private javax.swing.JButton jbtReporte;
+    private javax.swing.JButton jbtReporteDiario;
     private javax.swing.JButton jbtRetroceder;
     private javax.swing.JButton jbtTarifario;
     // End of variables declaration//GEN-END:variables

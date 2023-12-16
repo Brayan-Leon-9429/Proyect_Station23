@@ -4,21 +4,12 @@ import java.util.Date;
 
 public class RegistroInicial {
 
-    private String codigo_reg;
     private String placa;
     private Date hora_entrada;
     private String lugar;
     private String tipo_vehiculo;
 
     public RegistroInicial() {
-    }
-
-    public String getCodigo_reg() {
-        return codigo_reg;
-    }
-
-    public void setCodigo_reg(String codigo_reg) {
-        this.codigo_reg = codigo_reg;
     }
 
     public String getPlaca() {

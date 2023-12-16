@@ -10,11 +10,13 @@ package Interfas;
  * @author danda
  */
 import Base_De_Datos.DaoPago;
+import Base_De_Datos.DaoRegistro;
 import clases.Tarifario;
 import Base_De_Datos.DaoTarifario;
 import Base_De_Datos.DaoTipoVehiculo;
 import Base_De_Datos.DaoUbicacion;
 import Base_De_Datos.DaoVehiculo;
+import clases.Cupon;
 import clases.Pago;
 import clases.Registro;
 import clases.Vehiculo;
@@ -27,6 +29,7 @@ public class ConfirmarRetiro extends javax.swing.JFrame {
     Registro registro = new Registro();
     DaoUbicacion daoUbicacion = new DaoUbicacion();
     DaoTarifario daoTarifario = new DaoTarifario();
+    DaoRegistro daoRegistro = new DaoRegistro();
     DaoTipoVehiculo daoTipoVehiculo = new DaoTipoVehiculo();
     DaoPago daoPago = new DaoPago();
     DaoVehiculo daoVehiculo = new DaoVehiculo();
@@ -34,10 +37,15 @@ public class ConfirmarRetiro extends javax.swing.JFrame {
     Pago pago = new Pago();
     SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     String Hora_E, Hora_S;
+    Cupon cupon = new Cupon();
     Double comision = 0.0;
+    Double desc = 0.0;
+    Double horas = 0.0;
+    Double monto = 0.0;
 
-    public ConfirmarRetiro(Registro r, int origen) {
+    public ConfirmarRetiro(Registro r, int origen, Cupon c) {
         initComponents();
+        cupon = c;
         registro = r;
         jtfCodigoRegistro.setText(registro.getId_vehiculo());
         Vehiculo v = daoVehiculo.vehiculoGet(registro.getId_vehiculo());
@@ -49,8 +57,9 @@ public class ConfirmarRetiro extends javax.swing.JFrame {
         jtfUbi.setText(registro.getId_ubicacion());
         String tipo = daoTipoVehiculo.obtenerTipo(v.getId_tipo_vehiculo());
         jtfTipoVehi.setText(tipo);
+        jtfCupon.setText("S/. " + String.format("%.2f", cupon.getDescuento()));
         comision(origen);
-        pago=calcularHorasYValorAPagar();
+        pago = calcularHorasYValorAPagar();
     }
 
     @SuppressWarnings("unchecked")
@@ -77,7 +86,10 @@ public class ConfirmarRetiro extends javax.swing.JFrame {
         jtfPago = new javax.swing.JTextField();
         jtfUbi = new javax.swing.JTextField();
         jtfComision = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jtfCupon = new javax.swing.JTextField();
+        jLabel50 = new javax.swing.JLabel();
+        jtfDescuento = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -172,6 +184,22 @@ public class ConfirmarRetiro extends javax.swing.JFrame {
         jtfComision.setFont(new java.awt.Font("Racing Sans One", 1, 18)); // NOI18N
         jtfComision.setFocusable(false);
 
+        jLabel3.setFont(new java.awt.Font("Racing Sans One", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Descuento de Cupon:");
+
+        jtfCupon.setBackground(new java.awt.Color(249, 138, 7));
+        jtfCupon.setFont(new java.awt.Font("Racing Sans One", 1, 18)); // NOI18N
+        jtfCupon.setFocusable(false);
+
+        jLabel50.setFont(new java.awt.Font("Racing Sans One", 1, 18)); // NOI18N
+        jLabel50.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel50.setText("Valor a Pagar:");
+
+        jtfDescuento.setBackground(new java.awt.Color(249, 138, 7));
+        jtfDescuento.setFont(new java.awt.Font("Racing Sans One", 1, 18)); // NOI18N
+        jtfDescuento.setFocusable(false);
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
@@ -181,19 +209,20 @@ public class ConfirmarRetiro extends javax.swing.JFrame {
                 .addComponent(jbtPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                .addContainerGap(46, Short.MAX_VALUE)
+                .addContainerGap(37, Short.MAX_VALUE)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel48, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel46, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel45, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel49, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel44, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel28, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel47, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel27)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel48)
+                            .addComponent(jLabel46)
+                            .addComponent(jLabel45)
+                            .addComponent(jLabel49)
+                            .addComponent(jLabel44)
+                            .addComponent(jLabel28)
+                            .addComponent(jLabel47))
                         .addGap(29, 29, 29)
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jtfCodigoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -204,18 +233,19 @@ public class ConfirmarRetiro extends javax.swing.JFrame {
                             .addComponent(jtfCntHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtfPago, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtfComision, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtfPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(51, 51, 51))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(271, 271, 271))))
+                            .addComponent(jtfPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtfCupon, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(jLabel50)
+                        .addGap(29, 29, 29)
+                        .addComponent(jtfDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(45, 45, 45))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel2)
-                .addGap(53, 53, 53)
+                .addGap(55, 55, 55)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtfCodigoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel47))
@@ -227,7 +257,7 @@ public class ConfirmarRetiro extends javax.swing.JFrame {
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtfTipoVehi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel49))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtfUbi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel48))
@@ -249,9 +279,17 @@ public class ConfirmarRetiro extends javax.swing.JFrame {
                     .addComponent(jtfComision, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfCupon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtfDescuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel50))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtfPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel46))
-                .addGap(32, 32, 32)
+                .addGap(73, 73, 73)
                 .addComponent(jbtPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
         );
@@ -273,14 +311,15 @@ public class ConfirmarRetiro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtPagarActionPerformed
+        registro.setId_cupon(cupon.getId_cupon());
         daoUbicacion.ubicacionUpdEstado(registro.getId_ubicacion(), "libre");
-        PagoYape yap = new PagoYape(registro, pago);
-        yap.setVisible(true);
+        MenuPago menuPago = new MenuPago(registro, pago, horas, comision, monto);
+        menuPago.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jbtPagarActionPerformed
 
     private void jtfPlacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfPlacaActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jtfPlacaActionPerformed
 
     private Pago calcularHorasYValorAPagar() {
@@ -296,11 +335,12 @@ public class ConfirmarRetiro extends javax.swing.JFrame {
                 long diezMinutosEnMilisegundos = 10 * 60 * 1000;
                 diferenciaEnMilisegundos -= diezMinutosEnMilisegundos;
             }
-
             double diferenciaEnHoras = diferenciaEnMilisegundos / (60.0 * 60.0 * 1000.0);
-
-            double valorAPagar = (diferenciaEnHoras * tarifario.getTarifa_hora()) + comision;
-
+            Double d = daoRegistro.obtDesc(diferenciaEnHoras);
+            horas = d;
+            double valorAPagar = ((diferenciaEnHoras * tarifario.getTarifa_hora()) * d) + comision - cupon.getDescuento();
+            monto = valorAPagar;
+            imprimirDesc(d);
             String codigo = daoPago.idPago();
             p.setId_pago(codigo);
             p.setPago_total(valorAPagar);
@@ -310,6 +350,14 @@ public class ConfirmarRetiro extends javax.swing.JFrame {
             System.out.println("Error al calcular horas y valor a pagar: " + e.getMessage());
         }
         return p;
+    }
+
+    private void imprimirDesc(Double d) {
+        if (d == 1.0) {
+            jtfDescuento.setText("0.0");
+        } else {
+            jtfDescuento.setText(String.valueOf(d));
+        }
     }
 
     private void comision(int n) {
@@ -330,20 +378,23 @@ public class ConfirmarRetiro extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
+    private javax.swing.JLabel jLabel50;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JButton jbtPagar;
     private javax.swing.JTextField jtfCntHoras;
     private javax.swing.JTextField jtfCodigoRegistro;
     private javax.swing.JTextField jtfComision;
+    private javax.swing.JTextField jtfCupon;
+    private javax.swing.JTextField jtfDescuento;
     private javax.swing.JTextField jtfHoraEntrada;
     private javax.swing.JTextField jtfHoraSalida;
     private javax.swing.JTextField jtfPago;
