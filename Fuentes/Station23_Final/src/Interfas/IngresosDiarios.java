@@ -102,6 +102,17 @@ public class IngresosDiarios extends javax.swing.JFrame {
         });
         jtbRegistros.setModel(modelo);
         jbtExportar.setEnabled(true);
+        calcular();
+    }
+    
+    private void calcular(){
+        int columna = 4;
+        double total = 0.0;
+        for (int i = 0; i < jtbRegistros.getRowCount(); i++) {
+            String valor = jtbRegistros.getValueAt(i, columna).toString().replace(",", ".");
+            total += Double.parseDouble(valor);
+        }
+        jtfSuma.setText(String.format("%.2f", total));
     }
 
     @SuppressWarnings("unchecked")

@@ -163,7 +163,10 @@ public class SalidaRetiro extends javax.swing.JFrame {
         Date hora_s = new Date();
         registro = daoRegistro.buscarIDVehiculo(Codigox.getText());
         if (registro != null) {
-            System.out.println(daoRegistro.getMensaje());
+            if(cupon.getId_cupon()==null){
+                cupon.setDescuento(0.0);
+                cupon.setId_cupon("NO-VA");
+            }
             registro.setHora_salida(hora_s);
             ConfirmarRetiro SBR = new ConfirmarRetiro(registro, 1, cupon);
             SBR.setVisible(true);

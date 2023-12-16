@@ -14,7 +14,7 @@ public class SalidaPerdida extends javax.swing.JFrame {
 
     DaoRegistro daoRegistro = new DaoRegistro();
     Registro registro = new Registro();
-    Cupon cupon = null;
+    Cupon cupon = new Cupon();
 
     public SalidaPerdida() {
         initComponents();
@@ -145,9 +145,9 @@ public class SalidaPerdida extends javax.swing.JFrame {
         Date hora_s = new Date();
         registro = daoRegistro.buscarPlaca(Placax.getText());
         if (registro != null) {
-            if(cupon==null){
+            if(cupon.getId_cupon()==null){
                 cupon.setDescuento(0.0);
-                cupon.setId_cupon("NO-REGISTRADO");
+                cupon.setId_cupon("NO-VA");
             }
             registro.setHora_salida(hora_s);
             ConfirmarRetiro SBR = new ConfirmarRetiro(registro, 2, cupon);
